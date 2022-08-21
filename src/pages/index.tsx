@@ -1,13 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import {
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, Flex, Stack } from "@chakra-ui/react";
+import { Input } from "components/form/Input";
 
 const SignIn: NextPage = () => {
   return (
@@ -32,53 +26,21 @@ const SignIn: NextPage = () => {
           bg={"gray.800"}
         >
           <Stack gap={"4"}>
-            <FormControl isRequired>
-              <FormLabel htmlFor={"email"} fontSize={"sm"} fontWeight={"bold"}>
-                Email
-              </FormLabel>
-              <Input
-                placeholder={"Insert your email"}
-                name={"email"}
-                id={"email"}
-                type={"email"}
-                bgColor={"gray.900"}
-                size={"lg"}
-                variant={"filled"}
-                focusBorderColor={"pink.500"}
-                _placeholder={{
-                  fontWeight: 300,
-                }}
-                _hover={{
-                  bgColor: "gray.900",
-                }}
-              />
-            </FormControl>
+            <Input
+              isRequired
+              label={"Email"}
+              name={"email"}
+              id={"email"}
+              type={"email"}
+            />
 
-            <FormControl isRequired>
-              <FormLabel
-                htmlFor={"password"}
-                fontSize={"sm"}
-                fontWeight={"bold"}
-              >
-                Password
-              </FormLabel>
-              <Input
-                placeholder={"Insert your password"}
-                name={"password"}
-                id={"password"}
-                type={"password"}
-                size={"lg"}
-                bgColor={"gray.900"}
-                variant={"filled"}
-                focusBorderColor={"pink.500"}
-                _placeholder={{
-                  fontWeight: 300,
-                }}
-                _hover={{
-                  bgColor: "gray.900",
-                }}
-              />
-            </FormControl>
+            <Input
+              isRequired
+              label={"Password"}
+              name={"password"}
+              id={"password"}
+              type={"password"}
+            />
           </Stack>
 
           <Button type={"submit"} mt={"6"} colorScheme={"pink"}>
