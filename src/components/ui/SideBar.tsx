@@ -1,10 +1,11 @@
-import { Box, Icon, Link, Stack, Text } from "@chakra-ui/react";
+import { Box, Stack, Text } from "@chakra-ui/react";
 import {
   RiContactsLine,
   RiDashboardLine,
   RiGitMergeLine,
   RiInputMethodLine,
 } from "react-icons/ri";
+import { NavLink } from "components/ui/NavLink";
 
 const SideBar = () => {
   return (
@@ -21,32 +22,13 @@ const SideBar = () => {
           </Text>
 
           <Stack gap={"4"} mt={"8"} alignItems={"stretch"}>
-            <Link
-              display={"flex"}
-              alignItems={"center"}
-              gap={"4"}
-              transition={"color 0.3s"}
-              _hover={{
-                textDecoration: "none",
-                color: "pink.400",
-              }}
-            >
-              <Icon as={RiDashboardLine} fontSize={"20"} />
-              <Text fontWeight={"medium"}>Dashboard</Text>
-            </Link>
-            <Link
-              display={"flex"}
-              alignItems={"center"}
-              gap={"4"}
-              transition={"color 0.3s"}
-              _hover={{
-                textDecoration: "none",
-                color: "pink.400",
-              }}
-            >
-              <Icon as={RiContactsLine} fontSize={"20"} />
-              <Text fontWeight={"medium"}>Users</Text>
-            </Link>
+            <NavLink
+              href={"/dashboard"}
+              icon={RiDashboardLine}
+              text={"Dashboard"}
+            />
+
+            <NavLink href={"/users"} icon={RiContactsLine} text={"Users"} />
           </Stack>
         </Box>
         <Box>
@@ -60,32 +42,13 @@ const SideBar = () => {
           </Text>
 
           <Stack gap={"4"} mt={"8"} alignItems={"stretch"}>
-            <Link
-              display={"flex"}
-              alignItems={"center"}
-              gap={"4"}
-              transition={"color 0.3s"}
-              _hover={{
-                textDecoration: "none",
-                color: "pink.400",
-              }}
-            >
-              <Icon as={RiInputMethodLine} fontSize={"20"} />
-              <Text fontWeight={"medium"}>Forms</Text>
-            </Link>
-            <Link
-              display={"flex"}
-              alignItems={"center"}
-              gap={"4"}
-              transition={"color 0.3s"}
-              _hover={{
-                textDecoration: "none",
-                color: "pink.400",
-              }}
-            >
-              <Icon as={RiGitMergeLine} fontSize={"20"} />
-              <Text fontWeight={"medium"}>Automation</Text>
-            </Link>
+            <NavLink href={"/forms"} icon={RiInputMethodLine} text={"Forms"} />
+
+            <NavLink
+              href={"/automation"}
+              icon={RiGitMergeLine}
+              text={"Automation"}
+            />
           </Stack>
         </Box>
       </Stack>
