@@ -9,7 +9,7 @@ import { NavLink } from "components/ui/NavLink";
 
 const SideBar = () => {
   return (
-    <Box as={"aside"} h={"64"} mr={"8"}>
+    <Box as={"aside"} h={"100%"} mr={"8"}>
       <Stack gap={"12"} alignItems={"flex-start"}>
         <Box>
           <Text
