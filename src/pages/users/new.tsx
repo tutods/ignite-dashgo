@@ -13,6 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Input } from "components/form/Input";
+import Link from "next/link";
 
 const CreateUser: NextPageWithLayout = () => {
   return (
@@ -67,7 +68,11 @@ const CreateUser: NextPageWithLayout = () => {
             gap={"4"}
             mt={"8"}
           >
-            <Button colorScheme={"whiteAlpha"}>Cancel</Button>
+            <Link href={"/users"}>
+              <Button as={"a"} colorScheme={"whiteAlpha"} cursor={"pointer"}>
+                Cancel
+              </Button>
+            </Link>
             <Button colorScheme={"pink"}>Save</Button>
           </Flex>
         </VStack>

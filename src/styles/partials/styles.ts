@@ -6,6 +6,9 @@ const styles: typeof theme.styles = {
       bg: "gray.900",
       color: "gray.50",
     },
+    button: {
+      cursor: "pointer",
+    },
   },
 };
 
