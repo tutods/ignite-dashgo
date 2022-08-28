@@ -3,11 +3,11 @@ import { Header } from "components/ui/Header";
 import { SideBar } from "components/ui/SideBar";
 import { Flex } from "@chakra-ui/react";
 
-type PanelLayoutProps = {
+type Props = {
   children: ReactNode;
 };
 
-const PanelLayout = ({ children }: PanelLayoutProps) => {
+const PanelLayout = ({ children }: Props) => {
   return (
     <Flex as={"main"} direction={"column"} h={"100vh"}>
       <Header />

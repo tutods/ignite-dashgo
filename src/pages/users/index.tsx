@@ -19,6 +19,7 @@ import { PanelLayout } from "components/layouts/Panel";
 import { NextPageWithLayout } from "shared/@types/Layout";
 import Link from "next/link";
 import { RiUserAddLine } from "react-icons/ri";
+import { Pagination } from "components/Pagination";
 
 const UsersList: NextPageWithLayout = () => {
   return (
@@ -72,6 +73,8 @@ const UsersList: NextPageWithLayout = () => {
             </Tr>
           </Tbody>
         </Table>
+
+        <Pagination />
       </Box>
     </>
   );
