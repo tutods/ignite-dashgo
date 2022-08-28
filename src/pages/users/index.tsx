@@ -33,9 +33,10 @@ const UsersList: NextPageWithLayout = () => {
             Users
           </Heading>
 
-          <Link href={"/new"}>
+          <Link href={"/users/new"}>
             <Button
               as={"a"}
+              cursor={"pointer"}
               size={"sm"}
               fontSize={"sm"}
               colorScheme={"pink"}
