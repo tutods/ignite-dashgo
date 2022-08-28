@@ -36,7 +36,6 @@ const UsersList: NextPageWithLayout = () => {
           <Link href={"/users/new"}>
             <Button
               as={"a"}
-              cursor={"pointer"}
               size={"sm"}
               fontSize={"sm"}
               colorScheme={"pink"}

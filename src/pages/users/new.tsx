@@ -69,7 +69,7 @@ const CreateUser: NextPageWithLayout = () => {
             mt={"8"}
           >
             <Link href={"/users"}>
-              <Button as={"a"} colorScheme={"whiteAlpha"} cursor={"pointer"}>
+              <Button as={"a"} colorScheme={"whiteAlpha"}>
                 Cancel
               </Button>
             </Link>
