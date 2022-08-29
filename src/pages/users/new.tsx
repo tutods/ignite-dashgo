@@ -21,8 +21,8 @@ const CreateUser: NextPageWithLayout = () => {
       <Head>
         <title>Create User | DashGo</title>
       </Head>
-      <Box flex={1} borderRadius={"8"} bg={"gray.800"} p={"8"}>
-        <Stack spacing={"6"} mb={"8"}>
+      <Box flex={1} borderRadius={"8"} bg={"gray.800"} p={["6", "8"]}>
+        <Stack gap={"6"} mb={"8"}>
           <Heading as={"h2"} size={"lg"} fontWeight={"normal"}>
             Create New User
           </Heading>
@@ -30,12 +30,18 @@ const CreateUser: NextPageWithLayout = () => {
           <Divider borderColor={"gray.700"} />
         </Stack>
 
-        <VStack spacing={"8"}>
+        <VStack gap={"8"}>
           <SimpleGrid
-            gridTemplateColumns={"repeat(2, 1fr)"}
-            minChildWidth={240}
+            minChildWidth={"240px"}
+            gridTemplateColumns={{
+              base: "",
+              md: "repeat(2, 1fr)",
+            }}
             w={"100%"}
-            spacing={"8"}
+            gap={{
+              base: "4",
+              lg: "8",
+            }}
           >
             <Input name={"name"} id={"name"} label={"User Name"} isRequired />
             <Input
