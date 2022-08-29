@@ -24,15 +24,16 @@ const Dashboard: NextPageWithLayout = () => {
 
       <SimpleGrid
         flex={1}
-        minChildWidth={320}
+        minChildWidth={"320px"}
         alignItems={"flex-start"}
         spacing={"4"}
-        columns={{
-          base: 1,
-          sm: 2,
-        }}
       >
-        <Box p={"8"} pb={"4"} bg={"gray.800"} borderRadius={"8"}>
+        <Box
+          p={{ base: "6", md: "8" }}
+          pb={"4"}
+          bg={"gray.800"}
+          borderRadius={"8"}
+        >
           <Text fontSize={"lg"} fontWeight={"bold"} mb={"4"}>
             Subscribers of the week
           </Text>
@@ -52,7 +53,12 @@ const Dashboard: NextPageWithLayout = () => {
             series={subscribersChartSeries}
           />
         </Box>
-        <Box p={"8"} pb={"4"} bg={"gray.800"} borderRadius={"8"}>
+        <Box
+          p={{ base: "6", md: "8" }}
+          pb={"4"}
+          bg={"gray.800"}
+          borderRadius={"8"}
+        >
           <Text fontSize={"lg"} fontWeight={"bold"} mb={"4"}>
             Open Rate
           </Text>

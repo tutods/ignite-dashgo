@@ -12,6 +12,7 @@ import {
   Th,
   Thead,
   Tr,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { ReactElement } from "react";
 import { PanelLayout } from "components/layouts/Panel";
@@ -22,6 +23,8 @@ import { Pagination } from "components/Pagination";
 import { Profile } from "components/ui/Profile";
 
 const UsersList: NextPageWithLayout = () => {
+  const isWideVersion = useBreakpointValue({ base: false, lg: true });
+
   return (
     <>
       <Head>
@@ -49,16 +52,16 @@ const UsersList: NextPageWithLayout = () => {
         <Table colorScheme={"whiteAlpha"}>
           <Thead>
             <Tr>
-              <Th px={"6"} color={"gray.300"} width={"8"}>
+              <Th px={["4", "4", "6"]} color={"gray.300"} width={"8"}>
                 <Checkbox colorScheme={"pink"} />
               </Th>
               <Th>User</Th>
-              <Th>Creation Date</Th>
+              {isWideVersion && <Th>Creation Date</Th>}
             </Tr>
           </Thead>
           <Tbody>
             <Tr>
-              <Td px={"6"}>
+              <Td px={["4", "4", "6"]}>
                 <Checkbox colorScheme={"pink"} />
               </Td>
               <Td>
@@ -72,12 +75,12 @@ const UsersList: NextPageWithLayout = () => {
                   />
                 </Box>
               </Td>
-              <Td>22th of April, 2022</Td>
+              {isWideVersion && <Td>22th of April, 2022</Td>}
             </Tr>
           </Tbody>
         </Table>
 
-        <Pagination />
+        <Pagination mt={"8"} />
       </Box>
     </>
   );
