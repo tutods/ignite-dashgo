@@ -3,7 +3,7 @@ import { createIcon } from "@chakra-ui/react";
 const Logo = createIcon({
   defaultProps: {
     width: "auto",
-    height: "28px",
+    height: ["20px", "28px"],
   },
   viewBox: "0 0 102 28",
   displayName: "dashGo",

@@ -9,7 +9,6 @@ import {
   Table,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
@@ -20,6 +19,7 @@ import { NextPageWithLayout } from "shared/@types/Layout";
 import Link from "next/link";
 import { RiUserAddLine } from "react-icons/ri";
 import { Pagination } from "components/Pagination";
+import { Profile } from "components/ui/Profile";
 
 const UsersList: NextPageWithLayout = () => {
   return (
@@ -63,10 +63,13 @@ const UsersList: NextPageWithLayout = () => {
               </Td>
               <Td>
                 <Box>
-                  <Text fontWeight={"bold"}>Daniel Sousa</Text>
-                  <Text fontSize={"sm"} color={"gray.300"}>
-                    geral@daniel-sousa.com
-                  </Text>
+                  <Profile
+                    profile={{
+                      name: "Daniel Sousa",
+                      email: "geral@daniel-sousa.com",
+                    }}
+                    direction={"left"}
+                  />
                 </Box>
               </Td>
               <Td>22th of April, 2022</Td>

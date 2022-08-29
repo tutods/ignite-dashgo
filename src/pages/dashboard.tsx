@@ -24,9 +24,13 @@ const Dashboard: NextPageWithLayout = () => {
 
       <SimpleGrid
         flex={1}
-        gap={"4"}
         minChildWidth={320}
         alignItems={"flex-start"}
+        spacing={"4"}
+        columns={{
+          base: 1,
+          sm: 2,
+        }}
       >
         <Box p={"8"} pb={"4"} bg={"gray.800"} borderRadius={"8"}>
           <Text fontSize={"lg"} fontWeight={"bold"} mb={"4"}>
