@@ -9,15 +9,15 @@ type Props = LinkProps & {
 };
 
 const NavLink = ({ icon, text, href, ...props }: Props) => {
-  const router = useRouter();
+  const { asPath } = useRouter();
 
   const isActive = useMemo(
-    () => router.pathname.includes(String(href)),
-    [router, href]
+    () => asPath.startsWith(String(href)),
+    [asPath, href]
   );
 
   return (
-    <Link href={href} {...props}>
+    <Link href={href} passHref {...props}>
       <ChakraLink
         color={isActive ? "pink.400" : ""}
         as={"a"}

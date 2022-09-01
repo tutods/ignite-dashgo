@@ -74,7 +74,7 @@ const CreateUser: NextPageWithLayout = () => {
             gap={"4"}
             mt={"8"}
           >
-            <Link href={"/users"}>
+            <Link href={"/users"} passHref>
               <Button as={"a"} colorScheme={"whiteAlpha"}>
                 Cancel
               </Button>

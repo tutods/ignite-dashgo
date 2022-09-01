@@ -1,3 +1,5 @@
+import { Profile } from "shared/@types/Profile";
+
 const profileData: Profile = {
   name: "Daniel Sousa",
   email: "geral@daniel-sousa.com",

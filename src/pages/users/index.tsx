@@ -36,7 +36,7 @@ const UsersList: NextPageWithLayout = () => {
             Users
           </Heading>
 
-          <Link href={"/users/new"}>
+          <Link href={"/users/new"} passHref>
             <Button
               as={"a"}
               size={"sm"}
