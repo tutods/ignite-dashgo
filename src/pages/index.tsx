@@ -2,8 +2,29 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { Button, Flex, Stack } from "@chakra-ui/react";
 import { Input } from "components/form/Input";
+import { SubmitHandler, useForm } from "react-hook-form";
+import {
+  SignInFromData,
+  SignInSchema,
+} from "shared/data/schemas/SignIn.schema";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const SignIn: NextPage = () => {
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { isSubmitting, errors, isValid },
+  } = useForm<SignInFromData>({
+    resolver: yupResolver(SignInSchema),
+    mode: "onChange",
+  });
+
+  const handleSignIn: SubmitHandler<SignInFromData> = async (data) => {
+    // Clear errors first
+    clearErrors();
+  };
+
   return (
     <>
       <Head>
@@ -18,6 +39,7 @@ const SignIn: NextPage = () => {
       >
         <Flex
           as={"form"}
+          onSubmit={handleSubmit(handleSignIn)}
           width={"100%"}
           maxWidth={360}
           flexDir={"column"}
@@ -27,27 +49,35 @@ const SignIn: NextPage = () => {
         >
           <Stack gap={"4"}>
             <Input
+              {...register("email")}
               isRequired
+              errorBorderColor={"red.500"}
               label={"Email"}
               name={"email"}
-              id={"email"}
               type={"email"}
+              error={errors.email}
             />
 
             <Input
+              {...register("password")}
               isRequired
               label={"Password"}
               name={"password"}
-              id={"password"}
               type={"password"}
+              error={errors.password}
             />
           </Stack>
 
-          <Button type={"submit"} mt={"6"} colorScheme={"pink"}>
+          <Button
+            type={"submit"}
+            mt={"6"}
+            colorScheme={"pink"}
+            isDisabled={!isValid}
+            isLoading={isSubmitting}
+          >
             Sign In
           </Button>
         </Flex>
-        {/*<Flex grow={1}></Flex>*/}
       </Flex>
     </>
   );
