@@ -14,8 +14,31 @@ import {
 } from "@chakra-ui/react";
 import { Input } from "components/form/Input";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import {
+  CreateUserFormData,
+  CreateUserFormSchema,
+} from "shared/data/schemas/pages/CreateUser.schema";
 
 const CreateUser: NextPageWithLayout = () => {
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    formState: { isSubmitting, errors, isValid },
+  } = useForm<CreateUserFormData>({
+    resolver: yupResolver(CreateUserFormSchema),
+    mode: "onChange",
+  });
+
+  const handleUserCreation: SubmitHandler<CreateUserFormData> = async (
+    data
+  ) => {
+    // Clear errors first
+    clearErrors();
+  };
+
   return (
     <>
       <Head>
@@ -30,7 +53,11 @@ const CreateUser: NextPageWithLayout = () => {
           <Divider borderColor={"gray.700"} />
         </Stack>
 
-        <VStack gap={"8"}>
+        <VStack
+          gap={"8"}
+          as={"form"}
+          onSubmit={handleSubmit(handleUserCreation)}
+        >
           <SimpleGrid
             minChildWidth={"240px"}
             gridTemplateColumns={{
@@ -43,27 +70,37 @@ const CreateUser: NextPageWithLayout = () => {
               lg: "8",
             }}
           >
-            <Input name={"name"} id={"name"} label={"User Name"} isRequired />
             <Input
+              {...register("name")}
+              name={"name"}
+              id={"name"}
+              label={"User Name"}
+              isRequired
+              error={errors.name}
+            />
+            <Input
+              {...register("email")}
               type={"email"}
               name={"email"}
-              id={"email"}
               label={"User Email"}
               isRequired
+              error={errors.email}
             />
             <Input
+              {...register("password")}
               type={"password"}
               name={"password"}
-              id={"password"}
               label={"Password"}
               isRequired
+              error={errors.password}
             />
             <Input
+              {...register("confirmPassword")}
               type={"password"}
               name={"confirmPassword"}
-              id={"confirmPassword"}
               label={"Confirm Password"}
               isRequired
+              error={errors.confirmPassword}
             />
           </SimpleGrid>
 
@@ -79,7 +116,14 @@ const CreateUser: NextPageWithLayout = () => {
                 Cancel
               </Button>
             </Link>
-            <Button colorScheme={"pink"}>Save</Button>
+            <Button
+              type={"submit"}
+              colorScheme={"pink"}
+              isDisabled={!isValid}
+              isLoading={isSubmitting}
+            >
+              Save
+            </Button>
           </Flex>
         </VStack>
       </Box>

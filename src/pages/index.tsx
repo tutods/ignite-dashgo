@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import {
   SignInFormData,
   SignInFormSchema,
-} from "shared/data/schemas/forms/SignInSchema";
+} from "shared/data/schemas/pages/SignIn.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const SignIn: NextPage = () => {

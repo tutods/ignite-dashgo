@@ -16,7 +16,7 @@ const SignInFormSchema = yup
       .required("Email is required!"),
     password: yup
       .string()
-      .min(4, "Password needs at least 4 characters.")
+      .min(6, "Password needs at least 6 characters.")
       .required("Password is required!"),
   })
   .required();
