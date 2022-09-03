@@ -26,7 +26,7 @@ const CreateUser: NextPageWithLayout = () => {
     register,
     handleSubmit,
     clearErrors,
-    formState: { isSubmitting, errors, isValid },
+    formState: { isSubmitting, errors, isDirty },
   } = useForm<CreateUserFormData>({
     resolver: yupResolver(CreateUserFormSchema),
     mode: "onChange",
@@ -119,7 +119,7 @@ const CreateUser: NextPageWithLayout = () => {
             <Button
               type={"submit"}
               colorScheme={"pink"}
-              isDisabled={!isValid}
+              isDisabled={isDirty}
               isLoading={isSubmitting}
             >
               Save
