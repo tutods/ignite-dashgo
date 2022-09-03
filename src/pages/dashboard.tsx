@@ -8,11 +8,21 @@ import { ReactElement } from "react";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const subscribersChartSeries = [
+const CHART_SERIES = [
   {
     name: "series1",
     data: [31, 120, 10, 20, 61, 18, 109],
   },
+];
+
+const CHART_CATEGORIES = [
+  "2021-03-18T00:00:00.000Z",
+  "2021-03-19T00:00:00.000Z",
+  "2021-03-20T00:00:00.000Z",
+  "2021-03-21T00:00:00.000Z",
+  "2021-03-22T00:00:00.000Z",
+  "2021-03-23T00:00:00.000Z",
+  "2021-03-24T00:00:00.000Z",
 ];
 
 const Dashboard: NextPageWithLayout = () => {
@@ -41,16 +51,8 @@ const Dashboard: NextPageWithLayout = () => {
           <Chart
             type={"area"}
             height={168}
-            options={getChartOptions([
-              "2021-03-18T00:00:00.000Z",
-              "2021-03-19T00:00:00.000Z",
-              "2021-03-20T00:00:00.000Z",
-              "2021-03-21T00:00:00.000Z",
-              "2021-03-22T00:00:00.000Z",
-              "2021-03-23T00:00:00.000Z",
-              "2021-03-24T00:00:00.000Z",
-            ])}
-            series={subscribersChartSeries}
+            options={getChartOptions(CHART_CATEGORIES)}
+            series={CHART_SERIES}
           />
         </Box>
         <Box
@@ -66,16 +68,8 @@ const Dashboard: NextPageWithLayout = () => {
           <Chart
             type={"area"}
             height={168}
-            options={getChartOptions([
-              "2021-03-18T00:00:00.000Z",
-              "2021-03-19T00:00:00.000Z",
-              "2021-03-20T00:00:00.000Z",
-              "2021-03-21T00:00:00.000Z",
-              "2021-03-22T00:00:00.000Z",
-              "2021-03-23T00:00:00.000Z",
-              "2021-03-24T00:00:00.000Z",
-            ])}
-            series={subscribersChartSeries}
+            options={getChartOptions(CHART_CATEGORIES)}
+            series={CHART_SERIES}
           />
         </Box>
       </SimpleGrid>
