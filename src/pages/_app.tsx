@@ -3,6 +3,11 @@ import { theme } from "styles/theme";
 import Head from "next/head";
 import { AppPropsWithLayout } from "shared/@types/Layout";
 import { ReactElement } from "react";
+import { makeServer } from "shared/services/mirage";
+
+if (process.env.NODE_ENV === "development") {
+  makeServer();
+}
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page);

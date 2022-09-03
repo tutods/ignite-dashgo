@@ -14,7 +14,7 @@ import {
   Tr,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { PanelLayout } from "components/layouts/Panel";
 import { NextPageWithLayout } from "shared/@types/Layout";
 import Link from "next/link";
@@ -24,6 +24,12 @@ import { Profile } from "components/ui/Profile";
 
 const UsersList: NextPageWithLayout = () => {
   const isWideVersion = useBreakpointValue({ base: false, lg: true });
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/users")
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }, []);
 
   return (
     <>
