@@ -1,11 +1,13 @@
 import * as yup from "yup";
 
-type SignInFromData = {
+// Type of data on sign in form
+type SignInFormData = {
   email: string;
   password: string;
 };
 
-const SignInSchema = yup
+// Yup schema to validate sign in form
+const SignInFormSchema = yup
   .object()
   .shape({
     email: yup
@@ -19,5 +21,5 @@ const SignInSchema = yup
   })
   .required();
 
-export { SignInSchema };
-export type { SignInFromData };
+export { SignInFormSchema };
+export type { SignInFormData };

@@ -4,9 +4,9 @@ import { Button, Flex, Stack } from "@chakra-ui/react";
 import { Input } from "components/form/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-  SignInFromData,
-  SignInSchema,
-} from "shared/data/schemas/SignIn.schema";
+  SignInFormData,
+  SignInFormSchema,
+} from "shared/data/schemas/forms/SignInSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const SignIn: NextPage = () => {
@@ -15,12 +15,12 @@ const SignIn: NextPage = () => {
     handleSubmit,
     clearErrors,
     formState: { isSubmitting, errors, isValid },
-  } = useForm<SignInFromData>({
-    resolver: yupResolver(SignInSchema),
+  } = useForm<SignInFormData>({
+    resolver: yupResolver(SignInFormSchema),
     mode: "onChange",
   });
 
-  const handleSignIn: SubmitHandler<SignInFromData> = async (data) => {
+  const handleSignIn: SubmitHandler<SignInFormData> = async (data) => {
     // Clear errors first
     clearErrors();
   };
