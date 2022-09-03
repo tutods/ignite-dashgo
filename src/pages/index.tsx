@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import {
   SignInFormData,
   SignInFormSchema,
-} from "shared/data/schemas/pages/SignIn.schema";
+} from "shared/data/schemas/SignIn.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const SignIn: NextPage = () => {
@@ -14,7 +14,7 @@ const SignIn: NextPage = () => {
     register,
     handleSubmit,
     clearErrors,
-    formState: { isSubmitting, errors, isValid },
+    formState: { isSubmitting, errors, isDirty },
   } = useForm<SignInFormData>({
     resolver: yupResolver(SignInFormSchema),
     mode: "onChange",
@@ -72,7 +72,7 @@ const SignIn: NextPage = () => {
             type={"submit"}
             mt={"6"}
             colorScheme={"pink"}
-            isDisabled={!isValid}
+            isDisabled={isDirty}
             isLoading={isSubmitting}
           >
             Sign In

@@ -19,7 +19,7 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import {
   CreateUserFormData,
   CreateUserFormSchema,
-} from "shared/data/schemas/pages/CreateUser.schema";
+} from "shared/data/schemas/CreateUser.schema";
 
 const CreateUser: NextPageWithLayout = () => {
   const {
