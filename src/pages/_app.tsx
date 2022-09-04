@@ -4,6 +4,8 @@ import Head from "next/head";
 import { AppPropsWithLayout } from "shared/@types/Layout";
 import { ReactElement } from "react";
 import { makeServer } from "shared/services/mirage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 if (process.env.NODE_ENV === "development") {
   makeServer();
@@ -12,14 +14,19 @@ if (process.env.NODE_ENV === "development") {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page);
 
-  return (
-    <ChakraProvider theme={theme}>
-      <Head>
-        <title>DashGo</title>
-      </Head>
+  const client = new QueryClient();
 
-      {getLayout(<Component {...pageProps} />)}
-    </ChakraProvider>
+  return (
+    <QueryClientProvider client={client}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <ChakraProvider theme={theme}>
+        <Head>
+          <title>DashGo</title>
+        </Head>
+
+        {getLayout(<Component {...pageProps} />)}
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 
