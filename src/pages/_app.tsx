@@ -11,13 +11,14 @@ if (process.env.NODE_ENV === "development") {
   makeServer();
 }
 
+// React Query Client
+const queryClient = new QueryClient();
+
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page);
 
-  const client = new QueryClient();
-
   return (
-    <QueryClientProvider client={client}>
+    <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <ChakraProvider theme={theme}>
         <Head>
