@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "development") {
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page: ReactElement) => page);
+  const getLayout = Component.layout ?? ((page: ReactElement) => page);
 
   return (
     <QueryClientProvider client={queryClient}>

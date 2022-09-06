@@ -131,8 +131,6 @@ const CreateUser: NextPageWithLayout = () => {
   );
 };
 
-CreateUser.getLayout = (page: ReactElement) => (
-  <PanelLayout>{page}</PanelLayout>
-);
+CreateUser.layout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>;
 
 export default CreateUser;

@@ -26,14 +26,13 @@ import Link from "next/link";
 import { RiUserAddLine } from "react-icons/ri";
 import { Pagination } from "components/Pagination";
 import { Profile } from "components/ui/Profile";
-import { useQuery } from "@tanstack/react-query";
-import { getUsers } from "shared/services/api/requests/users";
+import { useUsers } from "shared/hooks/users/useUsers";
 
 const UsersList: NextPageWithLayout = () => {
-  const { data, isLoading, error } = useQuery(["users"], getUsers);
-  console.log(data);
+  const { data, isLoading, isFetching, isError } = useUsers();
 
   const isWideVersion = useBreakpointValue({ base: false, lg: true });
+
   return (
     <>
       <Head>
@@ -41,8 +40,18 @@ const UsersList: NextPageWithLayout = () => {
       </Head>
       <Box flex={1} borderRadius={"8"} bg={"gray.800"} p={"8"}>
         <Flex mb={"8"} justifyContent={"space-between"} alignItems={"center"}>
-          <Heading as={"h2"} size={"lg"} fontWeight={"normal"}>
+          <Heading
+            as={"h2"}
+            display={"flex"}
+            alignItems={"center"}
+            gap={"4"}
+            size={"lg"}
+            fontWeight={"normal"}
+          >
             Users
+            {!isLoading && isFetching && (
+              <Spinner color={"gray.500"} size={"sm"} />
+            )}
           </Heading>
 
           <Link href={"/users/new"} passHref>
@@ -62,7 +71,7 @@ const UsersList: NextPageWithLayout = () => {
           <Flex justifyContent={"center"}>
             <Spinner />
           </Flex>
-        ) : error ? (
+        ) : isError ? (
           <Flex>
             <Alert status="error">
               <AlertIcon />
@@ -114,6 +123,6 @@ const UsersList: NextPageWithLayout = () => {
   );
 };
 
-UsersList.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>;
+UsersList.layout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>;
 
 export default UsersList;

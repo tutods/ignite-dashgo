@@ -77,6 +77,6 @@ const Dashboard: NextPageWithLayout = () => {
   );
 };
 
-Dashboard.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>;
+Dashboard.layout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>;
 
 export default Dashboard;
