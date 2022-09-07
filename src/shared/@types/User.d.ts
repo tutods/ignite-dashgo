@@ -4,4 +4,20 @@ type User = {
   created_at: Date;
 };
 
-export { User };
+type ResponseUser = {
+  id?: string;
+  name: string;
+  email: string;
+  createdAt: string;
+};
+
+type RawUsersResponse = {
+  users: ResponseUser[];
+};
+
+type UsersResponse = {
+  count: number;
+  users: ResponseUser[];
+};
+
+export { User, ResponseUser, RawUsersResponse, UsersResponse };

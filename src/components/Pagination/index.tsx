@@ -1,11 +1,42 @@
-import { Box, HStack, Stack, StyleProps } from "@chakra-ui/react";
+import { Box, Flex, Stack, StyleProps } from "@chakra-ui/react";
 import { PaginationItem } from "components/Pagination/partials/PaginationItem";
+import { MorePaginationItem } from "components/Pagination/partials/MorePaginationItem";
 
 type Props = StyleProps & {
-  totalOfPages?: number;
+  totalOfResults: number;
+  currentPage?: number;
+  perPage?: number;
+  onPageChange: (page: number) => void;
 };
 
-const Pagination = ({ totalOfPages, ...props }: Props) => {
+const SIBLINGS_COUNT = 1;
+
+const generatePages = (from: number, to: number) => {
+  return [...new Array(to - from)]
+    .map((_, index) => from + index + 1)
+    .filter((page) => page > 0);
+};
+
+const Pagination = ({
+  totalOfResults,
+  currentPage = 1,
+  perPage = 10,
+  onPageChange,
+  ...props
+}: Props) => {
+  const LAST_PAGE = Math.floor(totalOfResults / perPage);
+  const previousPages =
+    currentPage > 1
+      ? generatePages(currentPage - 1 - SIBLINGS_COUNT, currentPage - 1)
+      : [];
+  const nextPages =
+    currentPage < LAST_PAGE
+      ? generatePages(
+          currentPage,
+          Math.min(currentPage + SIBLINGS_COUNT, LAST_PAGE)
+        )
+      : [];
+
   return (
     <Stack
       {...props}
@@ -15,14 +46,49 @@ const Pagination = ({ totalOfPages, ...props }: Props) => {
       align={"center"}
     >
       <Box fontSize={"sm"}>
-        <strong>0</strong> - <strong>10</strong> of 100
+        <strong>0</strong> - <strong>10</strong> of {totalOfResults}
       </Box>
-      <HStack gap={"1"}>
-        <PaginationItem page={1} isCurrent />
-        <PaginationItem page={2} />
-        <PaginationItem page={3} />
-        <PaginationItem page={4} />
-      </HStack>
+      <Flex gap={"2"}>
+        {currentPage > 1 + SIBLINGS_COUNT && (
+          <>
+            <PaginationItem onPageChange={onPageChange} page={1} />
+            {currentPage > 2 + SIBLINGS_COUNT && <MorePaginationItem />}
+          </>
+        )}
+
+        {previousPages &&
+          previousPages.map((page) => (
+            <PaginationItem
+              key={page}
+              onPageChange={onPageChange}
+              page={page}
+            />
+          ))}
+
+        <PaginationItem
+          onPageChange={onPageChange}
+          page={currentPage}
+          isCurrent
+        />
+
+        {nextPages &&
+          nextPages.map((page) => (
+            <PaginationItem
+              key={page}
+              onPageChange={onPageChange}
+              page={page}
+            />
+          ))}
+
+        {currentPage + SIBLINGS_COUNT < LAST_PAGE && (
+          <>
+            {currentPage + 1 + SIBLINGS_COUNT < LAST_PAGE && (
+              <MorePaginationItem />
+            )}
+            <PaginationItem onPageChange={onPageChange} page={LAST_PAGE} />
+          </>
+        )}
+      </Flex>
     </Stack>
   );
 };

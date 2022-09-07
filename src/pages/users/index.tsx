@@ -19,7 +19,7 @@ import {
   Tr,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { ReactElement } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { PanelLayout } from "components/layouts/Panel";
 import { NextPageWithLayout } from "shared/@types/Layout";
 import Link from "next/link";
@@ -29,7 +29,12 @@ import { Profile } from "components/ui/Profile";
 import { useUsers } from "shared/hooks/users/useUsers";
 
 const UsersList: NextPageWithLayout = () => {
-  const { data, isLoading, isFetching, isError } = useUsers();
+  const [page, setPage] = useState<number>(1);
+  const { data, isLoading, isFetching, isError } = useUsers(page);
+
+  const handlePageChange = useCallback((page: number) => {
+    setPage(page);
+  }, []);
 
   const isWideVersion = useBreakpointValue({ base: false, lg: true });
 
@@ -94,7 +99,7 @@ const UsersList: NextPageWithLayout = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {data?.map((user) => (
+                {data.users.map((user) => (
                   <Tr key={user.email}>
                     <Td px={["4", "4", "6"]}>
                       <Checkbox colorScheme={"pink"} />
@@ -115,7 +120,12 @@ const UsersList: NextPageWithLayout = () => {
                 ))}
               </Tbody>
             </Table>
-            <Pagination mt={"8"} />
+            <Pagination
+              currentPage={page}
+              totalOfResults={data.count}
+              onPageChange={handlePageChange}
+              mt={"8"}
+            />
           </>
         )}
       </Box>

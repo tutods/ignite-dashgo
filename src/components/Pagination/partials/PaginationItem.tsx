@@ -3,6 +3,7 @@ import { Button } from "@chakra-ui/react";
 type Props = {
   page: number;
   isCurrent?: boolean;
+  onPageChange?: (page: number) => void;
 };
 
 const HOVER_STYLE = {
@@ -14,7 +15,7 @@ const DISABLE_STYLE = {
   cursor: "default",
 };
 
-const PaginationItem = ({ page, isCurrent }: Props) => {
+const PaginationItem = ({ page, isCurrent, onPageChange, ...props }: Props) => {
   const ITEM_STYLE = isCurrent
     ? {
         colorScheme: "pink",
@@ -25,6 +26,7 @@ const PaginationItem = ({ page, isCurrent }: Props) => {
 
   return (
     <Button
+      {...props}
       size={"sm"}
       fontSize={"xs"}
       width={"4"}
@@ -33,6 +35,7 @@ const PaginationItem = ({ page, isCurrent }: Props) => {
       disabled={isCurrent}
       _disabled={DISABLE_STYLE}
       _hover={!isCurrent ? HOVER_STYLE : {}}
+      onClick={() => onPageChange(page)}
     >
       {page}
     </Button>
