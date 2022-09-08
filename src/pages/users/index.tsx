@@ -10,6 +10,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Link as ChakraLink,
   Spinner,
   Table,
   Tbody,
@@ -27,6 +28,8 @@ import { RiUserAddLine } from "react-icons/ri";
 import { Pagination } from "components/Pagination";
 import { Profile } from "components/ui/Profile";
 import { useUsers } from "shared/hooks/users/useUsers";
+import { queryClient } from "shared/services/queryClient";
+import { getUser } from "shared/services/api/requests/users";
 
 const UsersList: NextPageWithLayout = () => {
   const [page, setPage] = useState<number>(1);
@@ -37,6 +40,12 @@ const UsersList: NextPageWithLayout = () => {
   }, []);
 
   const isWideVersion = useBreakpointValue({ base: false, lg: true });
+
+  const handlePrefetchUser = async (userId: string) => {
+    await queryClient.prefetchQuery(["user", userId], () => getUser(userId), {
+      staleTime: 1000 * 60 * 10, // 10 minutes
+    });
+  };
 
   return (
     <>
@@ -106,13 +115,20 @@ const UsersList: NextPageWithLayout = () => {
                     </Td>
                     <Td>
                       <Box>
-                        <Profile
-                          profile={{
-                            name: user.name,
-                            email: user.email,
+                        <ChakraLink
+                          _hover={{
+                            textDecoration: "none",
                           }}
-                          direction={"left"}
-                        />
+                          onMouseEnter={() => handlePrefetchUser(user.id)}
+                        >
+                          <Profile
+                            profile={{
+                              name: user.name,
+                              email: user.email,
+                            }}
+                            direction={"left"}
+                          />
+                        </ChakraLink>
                       </Box>
                     </Td>
                     {isWideVersion && <Td>{user.createdAt}</Td>}

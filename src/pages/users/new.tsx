@@ -20,6 +20,10 @@ import {
   CreateUserFormData,
   CreateUserFormSchema,
 } from "shared/data/schemas/CreateUser.schema";
+import { useMutation } from "@tanstack/react-query";
+import { createUser } from "shared/services/api/requests/users";
+import { queryClient } from "shared/services/queryClient";
+import { useRouter } from "next/router";
 
 const CreateUser: NextPageWithLayout = () => {
   const {
@@ -31,12 +35,24 @@ const CreateUser: NextPageWithLayout = () => {
     resolver: yupResolver(CreateUserFormSchema),
     mode: "onChange",
   });
+  const { data, isError, isLoading, mutateAsync } = useMutation(
+    (userData: CreateUserFormData) => createUser(userData),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["users"]);
+      },
+    }
+  );
+  const router = useRouter();
 
   const handleUserCreation: SubmitHandler<CreateUserFormData> = async (
     data
   ) => {
     // Clear errors first
     clearErrors();
+
+    await mutateAsync(data);
+    router.push("/users");
   };
 
   return (
@@ -119,7 +135,6 @@ const CreateUser: NextPageWithLayout = () => {
             <Button
               type={"submit"}
               colorScheme={"pink"}
-              isDisabled={isDirty}
               isLoading={isSubmitting}
             >
               Save

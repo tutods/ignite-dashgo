@@ -1,4 +1,10 @@
-import { createServer, Factory, Model, Response } from "miragejs";
+import {
+  ActiveModelSerializer,
+  createServer,
+  Factory,
+  Model,
+  Response,
+} from "miragejs";
 import { User } from "shared/@types/User";
 import { faker } from "@faker-js/faker";
 
@@ -9,6 +15,10 @@ const getName = (): { firstName: string; lastName: string } => ({
 
 const makeServer = () => {
   const server = createServer({
+    serializers: {
+      application: ActiveModelSerializer,
+    },
+
     models: {
       user: Model.extend<Partial<User>>({}),
     },
@@ -24,7 +34,7 @@ const makeServer = () => {
             .toLowerCase();
         },
         createdAt() {
-          return faker.date.recent(10);
+          return faker.date.recent(5);
         },
       }),
     },
@@ -63,6 +73,7 @@ const makeServer = () => {
         );
       });
 
+      this.get("/users/:id");
       this.post("/users");
 
       this.namespace = "";
