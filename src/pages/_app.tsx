@@ -4,7 +4,7 @@ import Head from "next/head";
 import { AppPropsWithLayout } from "shared/@types/Layout";
 import { ReactElement } from "react";
 import { makeServer } from "shared/services/mirage";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { Hydrate, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "shared/services/queryClient";
 
@@ -12,7 +12,10 @@ if (process.env.NODE_ENV === "development") {
   makeServer();
 }
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({
+  Component,
+  pageProps: { dehydratedState, ...pageProps },
+}: AppPropsWithLayout) {
   const getLayout = Component.layout ?? ((page: ReactElement) => page);
 
   return (
@@ -23,7 +26,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <title>DashGo</title>
         </Head>
 
-        {getLayout(<Component {...pageProps} />)}
+        <Hydrate state={dehydratedState}>
+          {getLayout(<Component {...pageProps} />)}
+        </Hydrate>
       </ChakraProvider>
     </QueryClientProvider>
   );

@@ -4,6 +4,13 @@ type User = {
   created_at: Date;
 };
 
+type RawResponseUser = {
+  id?: string;
+  name: string;
+  email: string;
+  created_at: string;
+};
+
 type ResponseUser = {
   id?: string;
   name: string;
@@ -12,7 +19,7 @@ type ResponseUser = {
 };
 
 type RawUsersResponse = {
-  users: ResponseUser[];
+  users: RawResponseUser[];
 };
 
 type UsersResponse = {
@@ -20,4 +27,4 @@ type UsersResponse = {
   users: ResponseUser[];
 };
 
-export { User, ResponseUser, RawUsersResponse, UsersResponse };
+export { User, ResponseUser, RawResponseUser, RawUsersResponse, UsersResponse };

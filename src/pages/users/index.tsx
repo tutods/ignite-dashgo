@@ -29,7 +29,21 @@ import { Pagination } from "components/Pagination";
 import { Profile } from "components/ui/Profile";
 import { useUsers } from "shared/hooks/users/useUsers";
 import { queryClient } from "shared/services/queryClient";
-import { getUser } from "shared/services/api/requests/users";
+import { getUser, getUsers } from "shared/services/api/requests/users";
+import { GetServerSideProps } from "next";
+import { dehydrate } from "@tanstack/react-query";
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  await queryClient.prefetchQuery(["users", 2], () => getUsers(2));
+
+  console.log("Test");
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
 
 const UsersList: NextPageWithLayout = () => {
   const [page, setPage] = useState<number>(1);

@@ -1,5 +1,6 @@
 import { api } from "shared/services/api/index";
 import {
+  RawResponseUser,
   RawUsersResponse,
   ResponseUser,
   UsersResponse,
@@ -15,17 +16,18 @@ const getUsers = async (page: number): Promise<UsersResponse> => {
     });
 
     const count = Number(headers["x-total-count"]);
-    const users: ResponseUser[] = data.users.map((user: ResponseUser) => ({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      createdAt: new Date(user.createdAt).toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      }),
-    }));
-
+    const users: ResponseUser[] = data.users.map((user: RawResponseUser) => {
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdAt: new Date(user.created_at).toLocaleDateString("en-US", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }),
+      };
+    });
     return {
       count,
       users,
@@ -34,7 +36,6 @@ const getUsers = async (page: number): Promise<UsersResponse> => {
     throw new Error(error);
   }
 };
-
 const getUser = async (userId: string): Promise<{ user: ResponseUser }> => {
   try {
     const { data } = await api.get<{ user: ResponseUser }>(`/users/${userId}`);
