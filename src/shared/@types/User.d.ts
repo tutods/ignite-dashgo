@@ -1,14 +1,8 @@
 type User = {
+  id: string;
   name: string;
   email: string;
-  created_at: Date;
-};
-
-type RawResponseUser = {
-  id?: string;
-  name: string;
-  email: string;
-  created_at: string;
+  createdAt: string;
 };
 
 type ResponseUser = {
@@ -19,7 +13,8 @@ type ResponseUser = {
 };
 
 type RawUsersResponse = {
-  users: RawResponseUser[];
+  count: number;
+  users: User[];
 };
 
 type UsersResponse = {
@@ -27,4 +22,15 @@ type UsersResponse = {
   users: ResponseUser[];
 };
 
-export { User, ResponseUser, RawResponseUser, RawUsersResponse, UsersResponse };
+type CreateUserResponse = {
+  message: string;
+  user: User;
+};
+
+export {
+  User,
+  ResponseUser,
+  RawUsersResponse,
+  UsersResponse,
+  CreateUserResponse,
+};

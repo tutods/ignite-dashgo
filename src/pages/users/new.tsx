@@ -15,7 +15,7 @@ import {
 import { Input } from "components/form/Input";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   CreateUserFormData,
   CreateUserFormSchema,
@@ -38,8 +38,8 @@ const CreateUser: NextPageWithLayout = () => {
   const { data, isError, isLoading, mutateAsync } = useMutation(
     (userData: CreateUserFormData) => createUser(userData),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["users"]);
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(["users"], { exact: false });
       },
     }
   );

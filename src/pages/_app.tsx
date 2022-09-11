@@ -3,14 +3,9 @@ import { theme } from "styles/theme";
 import Head from "next/head";
 import { AppPropsWithLayout } from "shared/@types/Layout";
 import { ReactElement } from "react";
-import { makeServer } from "shared/services/mirage";
 import { Hydrate, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "shared/services/queryClient";
-
-if (process.env.NODE_ENV === "development") {
-  makeServer();
-}
 
 function MyApp({
   Component,

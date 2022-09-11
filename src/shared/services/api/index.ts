@@ -1,7 +1,26 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { envVars } from "shared/data/constants/env";
 
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+type Options = AxiosRequestConfig;
+
+const client = axios.create({
+  baseURL: envVars.apiUrl,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-export { api };
+const fetchData = async <T>(
+  url: string,
+  options?: Options
+): Promise<AxiosResponse<T>> => {
+  const { method = "GET" } = options ?? {};
+
+  return client({
+    url,
+    method,
+    ...options,
+  });
+};
+
+export { client, client as api, fetchData };

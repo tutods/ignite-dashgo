@@ -24,7 +24,7 @@ const Pagination = ({
   onPageChange,
   ...props
 }: Props) => {
-  const LAST_PAGE = Math.floor(totalOfResults / perPage);
+  const LAST_PAGE = Math.ceil(totalOfResults / perPage);
   const previousPages =
     currentPage > 1
       ? generatePages(currentPage - 1 - SIBLINGS_COUNT, currentPage - 1)
@@ -46,7 +46,8 @@ const Pagination = ({
       align={"center"}
     >
       <Box fontSize={"sm"}>
-        <strong>0</strong> - <strong>10</strong> of {totalOfResults}
+        Page <strong>{currentPage}</strong> of <strong>{LAST_PAGE}</strong> (
+        {totalOfResults} results)
       </Box>
       <Flex gap={"2"}>
         {currentPage > 1 + SIBLINGS_COUNT && (

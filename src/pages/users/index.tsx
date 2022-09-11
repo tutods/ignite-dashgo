@@ -20,7 +20,7 @@ import {
   Tr,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { ReactElement, useCallback, useState } from "react";
+import { ReactElement, useCallback, useEffect, useState } from "react";
 import { PanelLayout } from "components/layouts/Panel";
 import { NextPageWithLayout } from "shared/@types/Layout";
 import Link from "next/link";
@@ -28,15 +28,14 @@ import { RiUserAddLine } from "react-icons/ri";
 import { Pagination } from "components/Pagination";
 import { Profile } from "components/ui/Profile";
 import { useUsers } from "shared/hooks/users/useUsers";
-import { queryClient } from "shared/services/queryClient";
 import { getUser, getUsers } from "shared/services/api/requests/users";
 import { GetServerSideProps } from "next";
 import { dehydrate } from "@tanstack/react-query";
+import { queryClient } from "shared/services/queryClient";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  await queryClient.prefetchQuery(["users", 2], () => getUsers(2));
-
-  console.log("Test");
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(["users", 1], () => getUsers(1));
 
   return {
     props: {
@@ -56,10 +55,12 @@ const UsersList: NextPageWithLayout = () => {
   const isWideVersion = useBreakpointValue({ base: false, lg: true });
 
   const handlePrefetchUser = async (userId: string) => {
-    await queryClient.prefetchQuery(["user", userId], () => getUser(userId), {
-      staleTime: 1000 * 60 * 10, // 10 minutes
-    });
+    await queryClient.prefetchQuery(["user", userId], () => getUser(userId));
   };
+
+  useEffect(() => {
+    return () => setPage(1);
+  }, []);
 
   return (
     <>
