@@ -38,9 +38,10 @@
 
 The current verison of **DashGo** using the technologies bellow:
 
-[![Next][Next.js]][Next-url] [![React][React.js]][React-url] [![Chakra UI][Chakra-UI]][Chakra-url] [![React Hook Form][React-Hook-Form]]
-[React-Hook-Form-url] [![React Query][React-Query]]
-[React-Query-url]
+[![Next][Next.js]][Next-url] [![React][React.js]][React-url]
+[![Chakra UI][Chakra-UI]][Chakra-url]
+[![React Hook Form][React-Hook-Form]][React-Hook-Form-url]
+[![React Query][React-Query]][React-Query-url]
 
 On this project you can found other packages like:
 
