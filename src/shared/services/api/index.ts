@@ -1,26 +1,38 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { envVars } from "shared/data/constants/env";
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { envVars } from 'shared/data/constants/env';
 
-type Options = AxiosRequestConfig;
+type Options = AxiosRequestConfig & {
+	type: 'auth' | 'internal';
+};
 
 const client = axios.create({
-  baseURL: envVars.apiUrl,
-  headers: {
-    "Content-Type": "application/json",
-  },
+	baseURL: envVars.apiUrl,
+	headers: {
+		'Content-Type': 'application/json',
+	},
+});
+
+const authClient = axios.create({
+	baseURL: envVars.authApiUrl,
 });
 
 const fetchData = async <T>(
-  url: string,
-  options?: Options
+	url: string,
+	options?: Options
 ): Promise<AxiosResponse<T>> => {
-  const { method = "GET" } = options ?? {};
+	const { method = 'GET', type = 'internal' } = options ?? {};
 
-  return client({
-    url,
-    method,
-    ...options,
-  });
+	return type === 'internal'
+		? client({
+				url,
+				method,
+				...options,
+		  })
+		: authClient({
+				url,
+				method,
+				...options,
+		  });
 };
 
-export { client, client as api, fetchData };
+export { fetchData };
