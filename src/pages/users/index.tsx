@@ -34,7 +34,6 @@ import { dehydrate } from "@tanstack/react-query";
 import { queryClient } from "shared/services/queryClient";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // const queryClient = new QueryClient();
   await queryClient.prefetchQuery(["users", 1], () => getUsers(1));
 
   return {
