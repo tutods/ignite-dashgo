@@ -8,20 +8,24 @@ import {
   SignInFormSchema,
 } from "shared/data/schemas/SignIn.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useContext } from "react";
+import { AuthContext } from "contexts/AuthContext";
 
 const SignIn: NextPage = () => {
   const {
     register,
     handleSubmit,
     clearErrors,
-    formState: { isSubmitting, errors, isDirty },
+    formState: { isSubmitting, errors },
   } = useForm<SignInFormData>({
     resolver: yupResolver(SignInFormSchema),
     mode: "onChange",
   });
+  const { signIn } = useContext(AuthContext);
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (data) => {
-    // Clear errors first
+    await signIn(data);
+
     clearErrors();
   };
 
@@ -72,7 +76,6 @@ const SignIn: NextPage = () => {
             type={"submit"}
             mt={"6"}
             colorScheme={"pink"}
-            isDisabled={isDirty}
             isLoading={isSubmitting}
           >
             Sign In

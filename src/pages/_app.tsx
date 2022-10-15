@@ -6,6 +6,7 @@ import { ReactElement } from "react";
 import { Hydrate, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "shared/services/queryClient";
+import { AuthContextProvider } from "contexts/AuthContext";
 
 function MyApp({
   Component,
@@ -22,7 +23,9 @@ function MyApp({
         </Head>
 
         <Hydrate state={dehydratedState}>
-          {getLayout(<Component {...pageProps} />)}
+          <AuthContextProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </AuthContextProvider>
         </Hydrate>
       </ChakraProvider>
     </QueryClientProvider>
