@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { SignInFormData } from "shared/data/schemas/SignIn.schema";
 import { authClient, fetchData } from "shared/services/api";
 import { AuthResponse } from "shared/@types/AuthResponse";
@@ -31,16 +37,18 @@ const AuthContextProvider = ({ children }: AuthProviderProps) => {
 
   const getUserInfo = async () => {
     try {
-      const {
-        data: { email, roles, permissions },
-      } = await fetchData<UserData>("me", {
+      const response = await fetchData<UserData>("me", {
         type: "auth",
       });
 
+      if (!response || !response.data) {
+        return;
+      }
+
       setUser({
-        email,
-        roles,
-        permissions,
+        email: response.data.email,
+        roles: response.data.roles,
+        permissions: response.data.permissions,
       });
     } catch (error) {
       throw error;
@@ -71,7 +79,7 @@ const AuthContextProvider = ({ children }: AuthProviderProps) => {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
-      setCookie(undefined, "dsahgo.refreshToken", refreshToken, {
+      setCookie(undefined, "dashgo.refreshToken", refreshToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });

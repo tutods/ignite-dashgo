@@ -1,10 +1,13 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { envVars } from "shared/data/constants/env";
-import { parseCookies } from "nookies";
+import { parseCookies, setCookie } from "nookies";
+import { ref } from "yup";
 
 type Options = AxiosRequestConfig & {
   type?: "auth" | "default";
 };
+
+let cookies = parseCookies();
 
 const client = axios.create({
   baseURL: envVars.apiUrl,
@@ -17,7 +20,50 @@ const authClient = axios.create({
   baseURL: envVars.authApiUrl,
 });
 
-const { "dashgo.token": token } = parseCookies();
+authClient.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError<{ code: string }>) => {
+    if (error.response.status === 401) {
+      if (error.response.data?.code === "token.expired") {
+        // refresh token
+        cookies = parseCookies();
+
+        const { "dashgo.refreshToken": refreshToken } = cookies;
+        authClient
+          .post(
+            "/refresh",
+            { refreshToken },
+            {
+              headers: {
+                Authorization: `Bearer ${cookies["dashgo.token"]}`,
+              },
+            }
+          )
+          .then(
+            (
+              response: AxiosResponse<{ token: string; refreshToken: string }>
+            ) => {
+              console.log(response, "---");
+              if (response && response.data) {
+                setCookie(undefined, "dashgo.token", response.data.token, {
+                  maxAge: 60 * 60 * 24 * 30, // 30 days
+                  path: "/",
+                });
+                setCookie(undefined, "dashgo.refreshToken", refreshToken, {
+                  maxAge: 60 * 60 * 24 * 30, // 30 days
+                  path: "/",
+                });
+              }
+            }
+          );
+
+        // console.log(data);
+      }
+
+      // logout
+    }
+  }
+);
 
 const fetchData = async <T>(
   url: string,
@@ -36,7 +82,7 @@ const fetchData = async <T>(
         method,
         headers: {
           ...options.headers,
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${cookies["dashgo.token"]}`,
         },
         ...options,
       });
