@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { envVars } from "shared/data/constants/env";
+import { parseCookies } from "nookies";
 
 type Options = AxiosRequestConfig & {
   type?: "auth" | "default";
@@ -16,6 +17,8 @@ const authClient = axios.create({
   baseURL: envVars.authApiUrl,
 });
 
+const { "dashgo.token": token } = parseCookies();
+
 const fetchData = async <T>(
   url: string,
   options?: Options
@@ -31,8 +34,12 @@ const fetchData = async <T>(
     : authClient({
         url,
         method,
+        headers: {
+          ...options.headers,
+          Authorization: `Bearer ${token}`,
+        },
         ...options,
       });
 };
 
-export { fetchData };
+export { fetchData, authClient, client };
